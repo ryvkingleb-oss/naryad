@@ -40,6 +40,11 @@ export function ProcedurePage() {
         <h1>{procedure.title}</h1>
         <p className="lead">{procedure.summary}</p>
       </header>
+      <section className="sample">
+        <a className="btn-quiet" href={`/api/blanks/${procedure.id}`}>Скачать бланк</a>
+        <p>Пустой образец бланка МВД. Ваших ответов в этом файле нет.</p>
+        <p className="muted">Заполненный файл — другая кнопка, она появляется после оплаты.</p>
+      </section>
       {procedure.about.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       <section>
         <h2>{procedure.whereTitle}</h2>
@@ -78,11 +83,15 @@ export function ProcedurePage() {
       </section>
       <p className="note">{SERVICE_DISCLAIMER}</p>
       {error ? <p className="error">{error}</p> : null}
-      <div className="bar">
-        <Link className="btn-quiet" to="/">К списку</Link>
-        <button className="btn" type="button" onClick={start} disabled={pending}>
-          {pending ? "Открываю бланк…" : user ? "Заполнить бланк" : "Зарегистрироваться и заполнить"}
-        </button>
+      <div className="bar-wrap">
+        <p className="muted sample-caption">«Скачать бланк» — пустой образец, без ваших ответов.</p>
+        <div className="bar">
+          <Link className="btn-quiet" to="/">К списку</Link>
+          <a className="btn-quiet" href={`/api/blanks/${procedure.id}`}>Скачать бланк</a>
+          <button className="btn" type="button" onClick={start} disabled={pending}>
+            {pending ? "Открываю бланк…" : user ? "Заполнить бланк" : "Зарегистрироваться и заполнить"}
+          </button>
+        </div>
       </div>
     </div>
   );

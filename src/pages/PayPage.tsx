@@ -68,7 +68,7 @@ export function PayPage() {
         </section>
       ) : (
         <section className="stack">
-          <p className="warn">Оплата тестовая, деньги не списывались. Файл лежит на бланке МВД: клетки, пустая подпись, без печати.</p>
+          <p className="warn">Оплата тестовая, деньги не списывались. Это ваш заполненный файл: клетки, пустая подпись, без печати. Пустой образец бланка скачивается отдельно, кнопкой «Скачать бланк» на странице документа.</p>
           <div className="row">
             <a className="btn" href={fileUrl}>Скачать PDF</a>
             <a className="btn-quiet" href={`${fileUrl}?disposition=inline`} target="_blank" rel="noreferrer">Открыть для печати</a>

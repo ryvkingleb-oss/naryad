@@ -49,6 +49,24 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
+const emptyBlanks = {
+  pribytie: { file: "pribytie-blank.pdf", name: "Бланк уведомления о прибытии.pdf" },
+  patent: { file: "patent-blank.pdf", name: "Бланк заявления на патент.pdf" },
+  vnzh: { file: "vnzh-blank.pdf", name: "Бланк заявления о виде на жительство.pdf" },
+  grazhdanstvo: { file: "grazhdanstvo-blank.pdf", name: "Бланк заявления о приеме в гражданство.pdf" },
+};
+
+app.get("/api/blanks/:procedureId", (req, res) => {
+  const blank = emptyBlanks[req.params.procedureId];
+  if (!blank) return res.status(404).json({ error: "Такого бланка нет" });
+  const file = path.resolve("server/blanks", blank.file);
+  if (!fs.existsSync(file)) return res.status(404).json({ error: "Файл бланка не найден" });
+  const encoded = encodeURIComponent(blank.name);
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `attachment; filename="blank.pdf"; filename*=UTF-8''${encoded}`);
+  res.sendFile(file);
+});
+
 app.get("/api/me", (req, res) => {
   res.json({ user: sessionUser(req) });
 });

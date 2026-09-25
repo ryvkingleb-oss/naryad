@@ -1,10 +1,9 @@
-# Port 80 on this host belongs to the repair site (masterprorab.ru and the bare IP).
-# Do not attach 109.172.37.155 on port 80 to this app, and do not enable nginx.
-# While documentmigrant.ru has no DNS, keep the http:// prefix on the names.
-# After the A records answer, drop http:// from the domain names only and restart Caddy.
-# The public fallback until then is port 8080, published on the existing Caddy container.
+# Port 80 on the bare IP belongs to the repair site (masterprorab.ru and 109.172.37.155).
+# Do not attach that address to this app, and do not enable nginx.
+# Names without an http:// prefix make Caddy obtain a certificate and redirect HTTP to HTTPS.
+# Port 8080 stays as a temporary address on the existing Caddy container.
 
-http://documentmigrant.ru, http://www.documentmigrant.ru {
+documentmigrant.ru, www.documentmigrant.ru {
 	encode gzip
 	reverse_proxy 172.18.0.1:8787
 }
