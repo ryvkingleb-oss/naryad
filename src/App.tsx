@@ -12,11 +12,12 @@ import { PayPage } from "./pages/PayPage";
 export function App() {
   return (
     <div className="shell">
+      <a className="skip" href="#content">К содержанию</a>
       <header className="top">
         <Link className="brand" to="/">Наряд</Link>
         <Nav />
       </header>
-      <main className="main">
+      <main className="main" id="content">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/registraciya" element={<AuthPage mode="register" />} />
@@ -36,9 +37,17 @@ function Nav() {
   const { user, ready, setUser } = useAuth();
   const navigate = useNavigate();
   if (!ready) return null;
-  if (!user) return <nav className="nav"><Link to="/vhod">Войти</Link></nav>;
+  if (!user) {
+    return (
+      <nav className="nav" aria-label="Вход">
+        <Link to="/#dokumenty">Документы</Link>
+        <Link to="/vhod">Войти</Link>
+      </nav>
+    );
+  }
   return (
-    <nav className="nav">
+    <nav className="nav" aria-label="Кабинет">
+      <Link to="/#dokumenty">Документы</Link>
       <Link to="/kabinet">{user.name}</Link>
       <button className="text-btn" type="button" onClick={() => { api.logout().finally(() => { setUser(null); navigate("/"); }); }}>
         Выйти
