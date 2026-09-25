@@ -1,0 +1,8 @@
+# Add this block to the existing Caddyfile. Port 80 on this host is already Caddy.
+# While documentmigrant.ru has no DNS, keep the http:// prefix.
+# After the A records answer, remove http:// and restart Caddy so it can obtain a certificate.
+
+http://documentmigrant.ru, http://www.documentmigrant.ru {
+	encode gzip
+	reverse_proxy 172.18.0.1:8787
+}
