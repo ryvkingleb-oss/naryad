@@ -1,0 +1,54 @@
+{
+  "checkedOn": "2026-09-25",
+  "pages": [
+    {
+      "id": "pribytie-list",
+      "procedureId": "pribytie",
+      "url": "https://тосно.78.мвд.рф/folder/18280065",
+      "title": "Перечень необходимых для предоставления государственной услуги документов",
+      "markers": ["уведомлен", "прибыти"]
+    },
+    {
+      "id": "pribytie-blank",
+      "procedureId": "pribytie",
+      "url": "https://тосно.78.мвд.рф/folder/18280070",
+      "title": "Форма уведомления о прибытии иностранного гражданина",
+      "markers": ["уведомлен", "прибыти"]
+    },
+    {
+      "id": "patent-blank",
+      "procedureId": "patent",
+      "url": "https://балахта.24.мвд.рф/folder/35266596",
+      "title": "Бланк заявления об оформлении патента",
+      "markers": ["патент", "заявлен"]
+    },
+    {
+      "id": "vnzh-blank",
+      "procedureId": "vnzh",
+      "url": "https://адмирал.78.мвд.рф/folder/72236801",
+      "title": "Заявление о выдаче вида на жительство",
+      "markers": ["вид на жительство", "заявлен"]
+    },
+    {
+      "id": "vnzh-actions",
+      "procedureId": "vnzh",
+      "url": "https://адмирал.78.мвд.рф/folder/72236762",
+      "title": "Действия заявителя при предоставлении государственной услуги",
+      "markers": ["вид на жительство"]
+    },
+    {
+      "id": "grazhdanstvo-list",
+      "procedureId": "grazhdanstvo",
+      "url": "https://адмирал.78.мвд.рф/folder/40088696",
+      "title": "Перечни документов, необходимых для изменения гражданства",
+      "markers": ["гражданств"]
+    },
+    {
+      "id": "grazhdanstvo-blank",
+      "procedureId": "grazhdanstvo",
+      "url": "https://адмирал.78.мвд.рф/folder/40090160",
+      "title": "Бланки заявлений и образцы их заполнения",
+      "markers": ["гражданств"]
+    }
+  ]
+}
