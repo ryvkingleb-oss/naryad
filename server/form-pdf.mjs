@@ -3,6 +3,7 @@ import path from "node:path";
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { renderOfficialVnzh } from "./vnzh-official.mjs";
+import { renderOfficialArrival, renderOfficialCitizenship, renderOfficialPatent } from "./official-fill.mjs";
 
 const INK = rgb(0.1, 0.09, 0.08);
 const MUTED = rgb(0.33, 0.3, 0.26);
@@ -490,6 +491,9 @@ export function layoutFor(procedureId) {
 
 export async function renderFormPdf(procedureId, values, meta) {
   if (procedureId === "vnzh") return renderOfficialVnzh(values);
+  if (procedureId === "pribytie") return renderOfficialArrival(values);
+  if (procedureId === "patent") return renderOfficialPatent(values);
+  if (procedureId === "grazhdanstvo") return renderOfficialCitizenship(values);
   const layout = layouts[procedureId];
   if (!layout) throw new Error("Нет макета бланка");
   const pdf = await PDFDocument.create();
