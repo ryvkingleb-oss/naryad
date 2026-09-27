@@ -15,9 +15,10 @@ import {
   userByToken,
   verifyUser,
 } from "./store.mjs";
-import { paymentProvider } from "./payment.mjs";
+import { paymentModeWarning, paymentProvider } from "./payment.mjs";
 import { mailer } from "./mailer.mjs";
 import { layoutFor, renderFormPdf } from "./form-pdf.mjs";
+import { htmlStatus, injectIndexHtml, redirectTarget, robotsTxt, sitemapXml } from "./seo-pages.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
@@ -195,16 +196,35 @@ function withTitle(document) {
   return { ...document, title: titles[document.procedureId] || "Документ" };
 }
 
+app.get("/robots.txt", (_req, res) => {
+  res.type("text/plain; charset=utf-8").send(robotsTxt());
+});
+
+app.get("/sitemap.xml", (_req, res) => {
+  res.type("application/xml; charset=utf-8").send(sitemapXml());
+});
+
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const target = redirectTarget(req.path);
+  if (!target || target === req.path) return next();
+  res.redirect(301, target);
+});
+
 const dist = path.resolve("dist");
-if (fs.existsSync(dist)) {
-  app.use(express.static(dist));
+const indexFile = path.join(dist, "index.html");
+if (fs.existsSync(indexFile)) {
+  app.use(express.static(dist, { index: false }));
   app.use((req, res, next) => {
-    if (req.method !== "GET" || req.path.startsWith("/api")) return next();
-    res.sendFile(path.join(dist, "index.html"));
+    if ((req.method !== "GET" && req.method !== "HEAD") || req.path.startsWith("/api")) return next();
+    const html = injectIndexHtml(fs.readFileSync(indexFile, "utf8"), req.path);
+    res.status(htmlStatus(req.path)).type("html").send(html);
   });
 }
 
 const host = process.env.HOST || "127.0.0.1";
+const paymentWarning = paymentModeWarning();
+if (paymentWarning) console.warn(paymentWarning);
 app.listen(port, host, () => {
   console.log(`api http://${host}:${port}`);
 });

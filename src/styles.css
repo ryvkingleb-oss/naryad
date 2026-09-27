@@ -52,12 +52,13 @@ h1, h2, h3 { font-family: "Liberation Serif", Georgia, serif; font-weight: 700; 
   justify-content: space-between;
   gap: 8px 16px;
   flex-wrap: wrap;
+  position: relative;
   padding: 8px 16px;
   border-bottom: 1px solid var(--line);
   background: var(--paper);
 }
 .brand { color: var(--ink); text-decoration: none; font-family: "Liberation Serif", Georgia, serif; font-size: 1.35rem; }
-.nav { display: flex; gap: 8px; align-items: center; }
+.nav { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 .nav a, .text-btn {
   color: var(--ink);
   text-decoration: none;
@@ -274,4 +275,50 @@ dd { margin: 2px 0 0; }
 @media (max-width: 480px) {
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn, .hero-actions .btn-quiet { width: 100%; }
+}
+
+.nav-toggle { display: none; }
+.nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; }
+.cluster { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.cluster a { color: var(--ink); text-underline-offset: 3px; }
+.cluster a:hover { color: var(--primary); }
+.prose { display: grid; gap: 16px; max-width: 40rem; }
+.prose h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+.prose-block { display: grid; gap: 10px; }
+.prose-block h2 { font-size: 1.45rem; }
+.prose .lead { margin: 0; }
+.site-foot {
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+.site-foot-inner {
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  display: grid;
+  gap: 8px;
+  padding: 16px 0 20px;
+  color: var(--muted);
+}
+.site-foot p { margin: 0; }
+.site-foot .foot-links a { color: var(--ink); }
+
+@media (max-width: 860px) {
+  .nav-toggle { display: inline-flex; margin-left: auto; }
+  .top { align-items: center; }
+  .nav {
+    display: none;
+    position: absolute;
+    z-index: 3;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 4px 8px 8px;
+  }
+  .nav.is-open { display: flex; justify-content: flex-start; }
+  .nav a, .nav .text-btn { width: 100%; justify-content: flex-start; }
 }
