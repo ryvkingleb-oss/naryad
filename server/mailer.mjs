@@ -5,9 +5,10 @@
 export const mailer = {
   id: "test",
 
-  async send({ to, subject, fileName }) {
+  async send({ to, subject, fileName, fromName }) {
     return {
       provider: "test",
+      fromName: fromName || "МиграФорма",
       to,
       subject,
       fileName,

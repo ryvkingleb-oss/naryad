@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { metaForPath } from "../../server/seo-pages.mjs";
+import { metaForPath, SITE_NAME } from "../../server/seo-pages.mjs";
 
 function ensureMeta(name: string, attr: "name" | "property" = "name") {
   const selector = `meta[${attr}="${name}"]`;
@@ -22,6 +22,8 @@ export function DocumentMeta() {
     ensureMeta("robots").setAttribute("content", meta.robots);
     ensureMeta("og:title", "property").setAttribute("content", meta.title);
     ensureMeta("og:description", "property").setAttribute("content", meta.description);
+    ensureMeta("og:site_name", "property").setAttribute("content", SITE_NAME);
+    ensureMeta("application-name").setAttribute("content", SITE_NAME);
     let canonical = document.head.querySelector('link[rel="canonical"]');
     if (meta.canonical) {
       if (!canonical) {

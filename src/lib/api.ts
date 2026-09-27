@@ -8,6 +8,7 @@ export interface Account {
 
 export interface MailRecord {
   provider: string;
+  fromName?: string;
   to: string;
   subject: string;
   fileName: string;

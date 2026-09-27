@@ -85,7 +85,7 @@ export function PayPage() {
             {document.emails.length ? (
               <ul className="list">
                 {document.emails.map((mail) => (
-                  <li key={mail.sentAt}>{mail.to}: {mail.delivered ? "отправлено" : "тест, не доставлено"}</li>
+                  <li key={mail.sentAt}>{mail.fromName ? `${mail.fromName} → ` : ""}{mail.to}: {mail.delivered ? "отправлено" : "тест, не доставлено"}</li>
                 ))}
               </ul>
             ) : null}

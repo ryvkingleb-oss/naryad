@@ -18,7 +18,7 @@ import {
 import { paymentModeWarning, paymentProvider } from "./payment.mjs";
 import { mailer } from "./mailer.mjs";
 import { layoutFor, renderFormPdf } from "./form-pdf.mjs";
-import { htmlStatus, injectIndexHtml, redirectTarget, robotsTxt, sitemapXml } from "./seo-pages.mjs";
+import { htmlStatus, injectIndexHtml, redirectTarget, robotsTxt, sitemapXml, SITE_NAME } from "./seo-pages.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
@@ -185,6 +185,7 @@ app.post("/api/documents/:id/email", async (req, res) => {
   const layout = layoutFor(document.procedureId);
   const message = await mailer.send({
     to,
+    fromName: SITE_NAME,
     subject: titles[document.procedureId],
     fileName: layout.fileName,
   });

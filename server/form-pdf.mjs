@@ -648,6 +648,8 @@ export async function renderFormPdf(procedureId, values, meta) {
   });
 
   pdf.setTitle(layout.title.replace(/\n/g, " "));
+  pdf.setAuthor("МиграФорма");
+  pdf.setCreator("МиграФорма");
   pdf.setSubject(meta.blankPageUrl || "");
   return { bytes: await pdf.save(), fileName: layout.fileName };
 }
