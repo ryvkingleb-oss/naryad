@@ -12,7 +12,7 @@ export function Inline({ text }: { text: string }) {
     const label = match[1];
     const href = match[2];
     if (href.startsWith("/")) nodes.push(<Link key={index} to={href}>{label}</Link>);
-    else if (href.startsWith("https://") || href.startsWith("mailto:")) nodes.push(<a key={index} href={href}>{label}</a>);
+    else if (href.startsWith("https://") || href.startsWith("mailto:") || href.startsWith("tel:")) nodes.push(<a key={index} href={href}>{label}</a>);
     else nodes.push(label);
     last = index + match[0].length;
   }

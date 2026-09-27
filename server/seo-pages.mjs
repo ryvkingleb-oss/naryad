@@ -9,7 +9,9 @@ export const TAGLINE = "Бланки МВД онлайн и понятные с�
 export const SITE_ORIGIN = "https://documentmigrant.ru";
 export const SELLER_NAME = "Рывкин Глеб Евгеньевич";
 export const SELLER_INN = "781019511603";
-export const SELLER_EMAIL = "info@documentmigrant.ru";
+export const SELLER_EMAIL = "support@documentmigrant.ru";
+export const SELLER_PHONE = "+7 999 529-44-65";
+export const SELLER_PHONE_TEL = "+79995294465";
 export const FILE_PRICE = "490 ₽";
 const UPDATED = "2026-09-27";
 
@@ -172,17 +174,18 @@ const marketingPages = [
     path: "/kontakty",
     title: "Контакты: Рывкин Глеб Евгеньевич",
     description:
-      "Самозанятый Рывкин Глеб Евгеньевич, ИНН 781019511603. Почта info@documentmigrant.ru. Офиса нет: файл скачивается в кабинете.",
+      "Самозанятый Рывкин Глеб Евгеньевич, ИНН 781019511603. Телефон +7 999 529-44-65, почта support@documentmigrant.ru. Офиса нет: файл скачивается в кабинете.",
     kicker: "Контакты",
     h1: "Контакты",
-    lead: "По вопросам оплаты и кабинета пишите на почту. Это не подразделение МВД, не МФЦ и не Госуслуги.",
+    lead: "По вопросам оплаты и кабинета пишите на почту или звоните. Это не подразделение МВД, не МФЦ и не Госуслуги.",
     blocks: [
       {
         facts: [
           { label: "Исполнитель", value: "Рывкин Глеб Евгеньевич" },
           { label: "Статус", value: "Самозанятый" },
           { label: "ИНН", value: "781019511603" },
-          { label: "Почта", value: "[info@documentmigrant.ru](mailto:info@documentmigrant.ru)" },
+          { label: "Телефон", value: `[${SELLER_PHONE}](tel:${SELLER_PHONE_TEL})` },
+          { label: "Почта", value: "[support@documentmigrant.ru](mailto:support@documentmigrant.ru)" },
           { label: "Сайт", value: "[documentmigrant.ru](https://documentmigrant.ru)" },
         ],
         paragraphs: [
@@ -211,7 +214,8 @@ const marketingPages = [
           { label: "Исполнитель", value: "Рывкин Глеб Евгеньевич" },
           { label: "Статус", value: "Самозанятый" },
           { label: "ИНН", value: "781019511603" },
-          { label: "Почта", value: "[info@documentmigrant.ru](mailto:info@documentmigrant.ru)" },
+          { label: "Телефон", value: `[${SELLER_PHONE}](tel:${SELLER_PHONE_TEL})` },
+          { label: "Почта", value: "[support@documentmigrant.ru](mailto:support@documentmigrant.ru)" },
           { label: "Сайт", value: "[documentmigrant.ru](https://documentmigrant.ru)" },
           { label: "Услуга", value: "Один заполненный PDF-бланк" },
           { label: "Цена", value: "490 ₽" },
@@ -244,7 +248,7 @@ const marketingPages = [
         heading: "Оплата, чек и отказ",
         paragraphs: [
           "К оплате переходите из кабинета, когда ответы сверены. Сумма на этом шаге — 490 ₽ за выбранный файл. Чек самозанятого направляется на почту, указанную при оплате.",
-          "Пока ссылка на файл ещё не открыта, от услуги можно отказаться: напишите на [info@documentmigrant.ru](mailto:info@documentmigrant.ru) с почты кабинета, вернём 490 ₽. Когда файл уже доступен для скачивания, услуга оказана.",
+          "Пока ссылка на файл ещё не открыта, от услуги можно отказаться: напишите на [support@documentmigrant.ru](mailto:support@documentmigrant.ru) с почты кабинета, вернём 490 ₽. Когда файл уже доступен для скачивания, услуга оказана.",
         ],
       },
       {
@@ -266,13 +270,14 @@ const marketingPages = [
       "Какие данные хранит самозанятый Рывкин Глеб Евгеньевич, ИНН 781019511603, чтобы собрать PDF-бланк и открыть его в кабинете. В МВД анкета не отправляется.",
     kicker: "Данные",
     h1: "Политика в отношении данных кабинета",
-    lead: "Оператор — самозанятый Рывкин Глеб Евгеньевич, ИНН 781019511603. Почта: info@documentmigrant.ru.",
+    lead: "Оператор — самозанятый Рывкин Глеб Евгеньевич, ИНН 781019511603. Телефон: +7 999 529-44-65. Почта: support@documentmigrant.ru.",
     blocks: [
       {
         facts: [
           { label: "Оператор", value: "Рывкин Глеб Евгеньевич, самозанятый" },
           { label: "ИНН", value: "781019511603" },
-          { label: "Почта", value: "[info@documentmigrant.ru](mailto:info@documentmigrant.ru)" },
+          { label: "Телефон", value: `[${SELLER_PHONE}](tel:${SELLER_PHONE_TEL})` },
+          { label: "Почта", value: "[support@documentmigrant.ru](mailto:support@documentmigrant.ru)" },
           { label: "Сайт", value: "[documentmigrant.ru](https://documentmigrant.ru)" },
         ],
       },
@@ -295,7 +300,7 @@ const marketingPages = [
       {
         heading: "Срок и удаление",
         paragraphs: [
-          "Записи лежат в кабинете, пока вы им пользуетесь. Чтобы посмотреть, исправить или удалить их, напишите на [info@documentmigrant.ru](mailto:info@documentmigrant.ru) с почты регистрации и укажите, какой кабинет закрыть.",
+          "Записи лежат в кабинете, пока вы им пользуетесь. Чтобы посмотреть, исправить или удалить их, напишите на [support@documentmigrant.ru](mailto:support@documentmigrant.ru) с почты регистрации и укажите, какой кабинет закрыть.",
           "Редакция от 27 сентября 2026 года. Контакты оператора продублированы на странице [контактов](/kontakty).",
         ],
       },
@@ -657,7 +662,7 @@ function inlineHtml(text) {
     html += esc(text.slice(last, index));
     const label = match[1];
     const href = match[2];
-    if (href.startsWith("/") || href.startsWith("https://") || href.startsWith("mailto:")) {
+    if (href.startsWith("/") || href.startsWith("https://") || href.startsWith("mailto:") || href.startsWith("tel:")) {
       html += `<a href="${esc(href)}">${esc(label)}</a>`;
     } else {
       html += esc(label);

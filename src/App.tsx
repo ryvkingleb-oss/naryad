@@ -10,7 +10,7 @@ import { CabinetPage } from "./pages/Cabinet";
 import { ProcedurePage } from "./pages/ProcedurePage";
 import { FormPage } from "./pages/FormPage";
 import { PayPage } from "./pages/PayPage";
-import { FILE_PRICE, redirects, SELLER_EMAIL, SELLER_INN, SELLER_NAME, SITE_NAME, TAGLINE } from "../server/seo-pages.mjs";
+import { FILE_PRICE, redirects, SELLER_EMAIL, SELLER_INN, SELLER_NAME, SELLER_PHONE, SELLER_PHONE_TEL, SITE_NAME, TAGLINE } from "../server/seo-pages.mjs";
 
 const menu = [
   { to: "/uslugi", label: "Услуги", match: (path: string) => path === "/uslugi" || path.startsWith("/dokument/") },
@@ -63,6 +63,7 @@ export function App() {
         <div className="site-foot-inner">
           <p>© {SITE_NAME} · documentmigrant.ru</p>
           <p className="site-foot-seller">Самозанятый {SELLER_NAME}, ИНН {SELLER_INN}.</p>
+          <p className="site-foot-seller"><a href={`tel:${SELLER_PHONE_TEL}`}>{SELLER_PHONE}</a></p>
           <p className="site-foot-seller"><a href={`mailto:${SELLER_EMAIL}`}>{SELLER_EMAIL}</a></p>
           <p>Заполненный PDF-бланк — {FILE_PRICE}. После оплаты файл скачивается в кабинете по ссылке. Бумажную доставку не делаем. Это не сайт МВД.</p>
           <nav className="foot-links" aria-label="Внизу страницы">
