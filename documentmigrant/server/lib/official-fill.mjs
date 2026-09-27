@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
+export { renderOfficialArrival } from "../pribytie-official.mjs";
 
 const INK = rgb(0.05, 0.05, 0.05);
 const FONT = path.resolve("public/fonts/LiberationSans-Regular.ttf");
@@ -116,102 +117,6 @@ function lines(page, font, value, slots, size = 10) {
     if (!rest) return;
     rest = fitLine(page, font, rest, slot[0], slot[1], slot[2], slot[3] || size);
   }
-}
-
-export async function renderOfficialArrival(values) {
-  const { pdf, font, pages } = await openBlank("pribytie-blank.pdf");
-  const page = pages[0];
-  cells(page, font, values.lastName, 227.8, NAME);
-  cells(page, font, values.firstName, 246.6, NAME);
-  cells(page, font, values.middleName, 265.3, FROM_MID);
-  cells(page, font, values.citizenship, 292.2, FROM_CIT);
-  writeDate(page, font, values.birthDate, 325.2, [[168.9, 184.4], [231.1, 246.6], [277.7, 293.2, 308.7, 324.3]]);
-  if (values.sex === "m") cross(page, 401.9, 311.2, 416, 325.2);
-  if (values.sex === "f") cross(page, 464.1, 311.2, 478.2, 325.2);
-  const birth = clean(values.birthPlace).split(",").map((part) => part.trim()).filter(Boolean);
-  if (birth.length > 1) {
-    cells(page, font, birth[0], 343.9, FROM_MID);
-    cells(page, font, birth[1], 362.6, FROM_MID);
-    cells(page, font, birth.slice(2).join(", "), 381.3, FROM_MID);
-  } else {
-    flowCells(page, font, values.birthPlace, [[343.9, FROM_MID], [362.6, FROM_MID], [381.3, FROM_MID]]);
-  }
-  const docRow = [91.2, 106.8, 122.3, 137.8, 153.4, 168.9, 184.4, 200, 215.5, 231.1, 277.7, 293.2, 308.7, 324.3, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7];
-  cells(page, font, values.docType, 410.5, docRow.slice(0, 10));
-  cells(page, font, values.docSeries, 410.5, docRow.slice(10, 14));
-  cells(page, font, values.docNumber, 410.5, docRow.slice(14));
-  const issued = dateText(values.docIssued).match(/(\d{2}\.\d{2}\.\d{4})/);
-  if (issued) writeDate(page, font, issued[1], 440.5, DATE_A);
-  writeDate(page, font, values.docUntil, 440.5, DATE_B);
-
-  const stay = clean(values.extraDoc).toLowerCase();
-  if (stay.includes("виза")) cross(page, 83.5, 488, 97, 501.9);
-  else if (stay.includes("жительств")) cross(page, 192.2, 488, 206, 501.9);
-  else if (stay.includes("образован")) cross(page, 471.8, 488, 486, 501.9);
-  else if (stay.includes("временн") || stay.includes("рвп")) cross(page, 332, 488, 346, 501.9);
-  const stayRow = [91.2, 106.8, 122.3, 137.8, 168.9, 184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4];
-  cells(page, font, values.extraDoc, 549, stayRow);
-  const purpose = clean(values.purpose).toLowerCase();
-  const purposeBox = [
-    ["служеб", 168.9],
-    ["туризм", 219.4],
-    ["делов", 269.9],
-    ["учеб", 312.6],
-    ["работ", 359.2],
-    ["част", 409.7],
-    ["транзит", 464.1],
-  ].find(([word]) => purpose.includes(word));
-  if (purposeBox) cross(page, purposeBox[1], 593.5, purposeBox[1] + 14, 607.5);
-  else if (purpose.includes("гуманитар")) cross(page, 168.9, 612, 183, 626.2);
-  else if (purpose) cross(page, 215.5, 612, 229.5, 626.2);
-  cells(page, font, values.foreignPhone, 626.2, [370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  cells(page, font, values.profession, 644.9, [122.3, 137.8, 153.4, 168.9, 184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  writeDate(page, font, values.entryDate, 677.1, DATE_A);
-  writeDate(page, font, values.stayUntil, 677.1, DATE_B);
-  const card = clean(values.migrationCard).replace(/\s+/g, "");
-  cells(page, font, card.slice(0, 4), 695.8, [215.5, 231.1, 246.6, 262.1], false);
-  cells(page, font, card.slice(4), 695.8, [293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5], false);
-
-  const back = pages[1];
-  flowCells(back, font, values.previousAddress, [[90.8, FROM_MID], [109.5, FROM_MID], [128.2, FROM_MID], [146.9, [60.2, 75.7, 91.2, ...NAME]]]);
-  flowCells(back, font, values.address, [
-    [193.4, FROM_CIT],
-    [212.1, FROM_CIT],
-    [241.3, FROM_CIT],
-    [260, FROM_MID],
-    [282.5, FROM_CIT],
-    [301.2, [168.9, 184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 324.3, 339.8, 355.3, 370.9, 386.4, 448.5, 464.1, 479.6, 495.1]],
-  ]);
-  flowCells(back, font, values.cadastral, [
-    [614.7, [184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]],
-    [633.4, [184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]],
-  ]);
-
-  const host = pages[2];
-  if (values.hostKind === "org") cross(host, 417.5, 74.5, 431.5, 88.3);
-  if (values.hostKind === "person") cross(host, 510.7, 74.5, 524.7, 88.3);
-  const hostParts = clean(values.hostName).split(" ");
-  cells(host, font, hostParts[0], 107, NAME);
-  cells(host, font, hostParts[1], 125.7, NAME);
-  cells(host, font, hostParts.slice(2).join(" "), 144.5, [184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  cells(host, font, values.hostDoc, 173.7, [75.7, 91.2, 106.8, 122.3, 137.8, 153.4, 168.9, 184.4, 200, 215.5, 231.1, 277.7, 293.2, 308.7, 324.3, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  flowCells(host, font, values.hostAddress, [[246.3, FROM_MID], [265, FROM_MID], [294.3, FROM_CIT], [313, FROM_MID], [335.3, FROM_CIT]]);
-  cells(host, font, values.lastName, 396.9, NAME);
-  cells(host, font, values.firstName, 415.6, NAME);
-  cells(host, font, values.middleName, 434.3, [184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  cells(host, font, values.citizenship, 459.8, [122.3, 137.8, 153.4, 168.9, 184.4, 200, 215.5, 231.1, 246.6, 262.1, 277.7, 293.2, 308.7, 324.3, 339.8, 355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  writeDate(host, font, values.birthDate, 486.7, [[157.3, 172.8], [219.4, 234.9], [266, 281.5, 297.1, 312.6]]);
-  if (values.sex === "m") cross(host, 401.9, 472.7, 416, 486.7);
-  if (values.sex === "f") cross(host, 464.1, 472.7, 478.2, 486.7);
-  flowCells(host, font, values.birthPlace, [[505.4, FROM_MID], [524.1, FROM_MID], [542.8, FROM_MID]]);
-  cells(host, font, values.docType, 572.1, [75.7, 91.2, 106.8, 122.3, 137.8, 153.4, 168.9, 184.4, 200, 215.5, 231.1]);
-  cells(host, font, values.docSeries, 572.1, [277.7, 293.2, 308.7, 324.3]);
-  cells(host, font, values.docNumber, 572.1, [355.3, 370.9, 386.4, 401.9, 417.5, 433, 448.5, 464.1, 479.6, 495.1, 510.7]);
-  if (issued) writeDate(host, font, issued[1], 602, DATE_A);
-  writeDate(host, font, values.docUntil, 602, DATE_B);
-  flowCells(host, font, values.address, [[643.9, FROM_MID], [662.7, FROM_MID], [691.9, FROM_CIT], [710.6, FROM_MID], [732.9, FROM_CIT]]);
-
-  return { bytes: await pdf.save(), fileName: "uvedomlenie-o-pribytii.pdf" };
 }
 
 export async function renderOfficialPatent(values) {
