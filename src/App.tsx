@@ -10,7 +10,7 @@ import { CabinetPage } from "./pages/Cabinet";
 import { ProcedurePage } from "./pages/ProcedurePage";
 import { FormPage } from "./pages/FormPage";
 import { PayPage } from "./pages/PayPage";
-import { redirects } from "../server/seo-pages.mjs";
+import { redirects, SITE_NAME, TAGLINE } from "../server/seo-pages.mjs";
 
 const menu = [
   { to: "/uslugi", label: "Услуги", match: (path: string) => path === "/uslugi" || path.startsWith("/dokument/") },
@@ -26,7 +26,10 @@ export function App() {
     <div className="shell">
       <a className="skip" href="#content">К содержанию</a>
       <header className="top">
-        <Link className="brand" to="/">Документ мигранта</Link>
+        <Link className="brand" to="/">
+          <span className="brand-name">{SITE_NAME}</span>
+          <span className="brand-tagline">{TAGLINE}</span>
+        </Link>
         <Nav />
       </header>
       <main className="main" id="content">
@@ -58,7 +61,8 @@ export function App() {
       </main>
       <footer className="site-foot">
         <div className="site-foot-inner">
-          <p>Документ мигранта готовит файл для печати. Это не сайт МВД. 490 ₽ за готовый файл, касса тестовая, списания нет.</p>
+          <p>© {SITE_NAME} · documentmigrant.ru</p>
+          <p>Файл для печати готовит сервис. Это не сайт МВД. 490 ₽ за готовый файл, касса тестовая, списания нет.</p>
           <nav className="foot-links" aria-label="Внизу страницы">
             {menu.map((item) => <Link key={item.to} to={item.to}>{item.label}</Link>)}
             <Link to="/oferta">Оферта</Link>

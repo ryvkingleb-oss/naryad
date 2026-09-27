@@ -1,4 +1,5 @@
 export const SITE_NAME: string;
+export const TAGLINE: string;
 export const SITE_ORIGIN: string;
 export const redirects: Record<string, string>;
 

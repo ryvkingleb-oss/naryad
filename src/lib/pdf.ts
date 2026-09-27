@@ -59,7 +59,7 @@ function wrap(text: string, font: PDFFont, size: number, maxWidth: number): stri
 export async function buildDraftPdf(procedure: Procedure, values: FormValues): Promise<Uint8Array> {
   const pdf = await PDFDocument.create();
   pdf.setTitle(procedure.pdf.draftTitle);
-  pdf.setAuthor("Наряд — черновик заявителя");
+  pdf.setAuthor("МиграФорма — черновик заявителя");
   pdf.setSubject(procedure.pdf.formReference);
   const font = await loadFont(pdf, "LiberationSans-Regular.ttf");
   const bold = await loadFont(pdf, "LiberationSans-Bold.ttf");

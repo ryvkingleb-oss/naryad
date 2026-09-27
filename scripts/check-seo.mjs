@@ -7,6 +7,7 @@ import {
   redirectTarget,
   robotsTxt,
   sitemapXml,
+  SITE_NAME,
 } from "../server/seo-pages.mjs";
 
 const pages = indexablePages();
@@ -85,7 +86,10 @@ assert.match(html, /<title>Уведомление о прибытии: блан�
 assert.match(html, /rel="canonical" href="https:\/\/documentmigrant\.ru\/dokument\/pribytie"/);
 assert.match(html, /Бланк уведомления о прибытии/);
 assert.equal(metaForPath("/kabinet").robots, "noindex, nofollow");
-assert.equal(metaForPath("/missing").title.startsWith("Страница не найдена"), true);
+assert.equal(metaForPath("/").title, "МиграФорма — бланки МВД онлайн: уведомление о прибытии, патент, РВП, ВНЖ");
+assert.equal(metaForPath("/kabinet").title, `${SITE_NAME} — кабинет`);
+assert.equal(metaForPath("/missing").title, `${SITE_NAME} — страница не найдена`);
+assert.match(html, /property="og:site_name" content="МиграФорма"/);
 
 const seen = new Set(pages.map((page) => page.path));
 assert.equal(seen.size, pages.length);

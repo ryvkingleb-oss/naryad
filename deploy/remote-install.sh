@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installs «Наряд» into /opt/documentmigrant.
+# Installs «МиграФорма» into /opt/documentmigrant.
 # Does not touch /opt/naryad (another site) and does not start nginx.
 # Port 80 on this host belongs to the existing Caddy container.
 set -euo pipefail

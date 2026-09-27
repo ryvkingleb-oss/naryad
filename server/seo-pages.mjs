@@ -4,7 +4,8 @@
  * Cluster choice follows the Wordstat export of 27 Sep 2026 (Russia, all regions).
  */
 
-export const SITE_NAME = "Документ мигранта";
+export const SITE_NAME = "МиграФорма";
+export const TAGLINE = "Бланки МВД онлайн и понятные статьи";
 export const SITE_ORIGIN = "https://documentmigrant.ru";
 const UPDATED = "2026-09-27";
 
@@ -20,7 +21,7 @@ export const redirects = {
 const marketingPages = [
   {
     path: "/",
-    title: "Уведомление о прибытии и бланки МВД — заполнить онлайн",
+    title: "МиграФорма — бланки МВД онлайн: уведомление о прибытии, патент, РВП, ВНЖ",
     description:
       "Онлайн-заполнение бланков МВД: уведомление о прибытии, патент на работу, вид на жительство и гражданство. Пустой бланк бесплатно. Готовый файл — после тестовой оплаты, деньги не списываются.",
     h1: "Уведомление о прибытии и бланки МВД: заполните онлайн и скачайте файл",
@@ -510,7 +511,7 @@ export function pageByPath(pathname) {
 
 function privateMeta(path) {
   return {
-    title: `Кабинет — ${SITE_NAME}`,
+    title: `${SITE_NAME} — кабинет`,
     description: "Служебная страница кабинета. В поиск её добавлять не нужно.",
     robots: "noindex, nofollow",
     canonical: "",
@@ -540,7 +541,7 @@ export function metaForPath(pathname) {
   }
   if (isPrivatePath(path)) return privateMeta(path);
   return {
-    title: `Страница не найдена — ${SITE_NAME}`,
+    title: `${SITE_NAME} — страница не найдена`,
     description: "Такой страницы на сервисе нет.",
     robots: "noindex, nofollow",
     canonical: "",
@@ -620,6 +621,8 @@ export function injectIndexHtml(template, pathname) {
   html = upsertMeta(html, "robots", meta.robots);
   html = upsertMeta(html, "og:title", meta.title, "property");
   html = upsertMeta(html, "og:description", meta.description, "property");
+  html = upsertMeta(html, "og:site_name", SITE_NAME, "property");
+  html = upsertMeta(html, "application-name", SITE_NAME);
   if (meta.canonical) {
     if (/<link\s+rel="canonical"[^>]*>/.test(html)) {
       html = html.replace(/<link\s+rel="canonical"[^>]*>/, `<link rel="canonical" href="${esc(meta.canonical)}" />`);
