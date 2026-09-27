@@ -4,7 +4,7 @@
 
 | URL | Мастер | Пустой бланк | PDF после оплаты | Статус | PDF |
 |-----|--------|--------------|------------------|--------|-----|
-| `/dokument/pribytie` | да (+ ребёнок) | `/api/blanks/pribytie` | да | **ready** | official blank |
+| `/dokument/pribytie` | да (+ ребёнок) | `/api/blanks/pribytie` | да | **ready** | official blank, 4 стр., приказ № 856 в ред. № 628 |
 | `/dokument/ubytie` | да | `/api/blanks/ubytie` | да | **ready** | layout |
 | `/dokument/patent` | да | `/api/blanks/patent` | да | **ready** | official blank |
 | `/dokument/rvp` | да (взрослый) | `/api/blanks/rvp` | да | **ready** | layout |
