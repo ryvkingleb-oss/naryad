@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { procedures } from "../data";
+import { pageByPath } from "../../server/seo-pages.mjs";
 
 const results: Record<string, string> = {
   pribytie: "Готовое уведомление о прибытии для печати и подачи",
@@ -19,15 +20,23 @@ export function HomePage() {
   const checked = procedures[0]?.official.checkedOn ?? "";
   const [year, month, day] = checked.split("-");
   const checkedLabel = day && month && year ? `${day}.${month}.${year}` : checked;
+  const home = pageByPath("/");
 
   return (
     <div className="home">
       <section className="hero">
         <p className="kicker">Помощник, не портал МВД</p>
-        <h1>Выберите документ, заполните форму и скачайте официальный бланк для печати</h1>
+        <h1>{home?.h1}</h1>
+        <p className="lead">{home?.lead}</p>
+        <nav className="cluster" aria-label="Частые задачи">
+          <Link to="/migracionnyj-uchet">Миграционный учёт</Link>
+          <Link to="/registraciya-inostrannogo-grazhdanina">Регистрация иностранного гражданина</Link>
+          <Link to="/dokument/pribytie">Бланк уведомления о прибытии</Link>
+          <Link to="/statyi/kak-zapolnit-uvedomlenie-o-pribytii">Как заполнить</Link>
+        </nav>
         <div className="hero-actions">
           <a className="btn" href="#dokumenty">Выбрать документ</a>
-          <Link className="btn-quiet" to="/vhod">Войти</Link>
+          <Link className="btn-quiet" to="/dokument/pribytie">Заполнить уведомление</Link>
         </div>
         <p className="price">
           <strong>490 ₽</strong>
@@ -85,14 +94,6 @@ export function HomePage() {
         </dl>
       </section>
 
-      <footer className="home-foot">
-        <p>Наряд готовит файл для печати. Это не сайт МВД и не визит к юристу. 490 ₽ за готовый файл, касса тестовая, списания нет.</p>
-        <p className="foot-links">
-          <Link to="/vhod">Войти</Link>
-          <Link to="/registraciya">Регистрация</Link>
-          <a href="#dokumenty">Документы</a>
-        </p>
-      </footer>
     </div>
   );
 }

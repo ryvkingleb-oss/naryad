@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProcedure, SERVICE_DISCLAIMER } from "../data";
+import { Blocks } from "../components/Content";
 import { api } from "../lib/api";
 import { useAuth } from "../auth";
+import { pageByPath } from "../../server/seo-pages.mjs";
 
 const needLabel = { always: "Обычно нужно", if: "Не всем", check: "Нужна сверка" };
 
@@ -40,6 +42,7 @@ export function ProcedurePage() {
         <h1>{procedure.title}</h1>
         <p className="lead">{procedure.summary}</p>
       </header>
+      <Blocks blocks={pageByPath(`/dokument/${procedure.id}`)?.supplements ?? []} />
       <section className="sample">
         <a className="btn-quiet" href={`/api/blanks/${procedure.id}`}>Скачать бланк</a>
         <p>Пустой образец бланка МВД. Ваших ответов в этом файле нет.</p>
