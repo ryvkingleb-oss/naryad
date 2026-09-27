@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import {
   indexablePages,
   injectIndexHtml,
@@ -7,6 +8,11 @@ import {
   redirectTarget,
   robotsTxt,
   sitemapXml,
+  SELLER_EMAIL,
+  SELLER_INN,
+  SELLER_NAME,
+  SELLER_PHONE,
+  SELLER_PHONE_TEL,
   SITE_NAME,
 } from "../server/seo-pages.mjs";
 
@@ -21,9 +27,10 @@ for (const page of pages) {
   titles.add(page.title);
   descriptions.add(page.description);
   assert.equal(pageByPath(page.path)?.path, page.path);
-  const blob = JSON.stringify(page);
+  const blob = JSON.stringify(page).split(SELLER_INN).join("").split(SELLER_PHONE).join("").split(SELLER_PHONE_TEL).join("");
   assert.ok(!/\d{2}\s?\d{3}/.test(blob), `looks like a search volume on ${page.path}`);
   assert.ok(!/запросов/i.test(blob), `search volume wording on ${page.path}`);
+  assert.doesNotMatch(blob, /не действует|не списыва|тестов|заглушк/i, page.path);
 }
 
 const required = [
@@ -93,4 +100,40 @@ assert.match(html, /property="og:site_name" content="МиграФорма"/);
 
 const seen = new Set(pages.map((page) => page.path));
 assert.equal(seen.size, pages.length);
+
+const legalExpect = {
+  "/oferta": ["<h1>Договор на заполненный PDF-бланк за 490 ₽</h1>", SELLER_NAME, SELLER_INN, "кабинет", "Публичная оферта"],
+  "/kontakty": ["<h1>Контакты</h1>", SELLER_NAME, SELLER_INN, "Самозанятый"],
+  "/ceny": ["<h1>490 ₽ за один заполненный бланк</h1>", "фиксирован", "кабинет"],
+  "/kak-eto-rabotaet": ["<h1>От пустого бланка к файлу в кабинете</h1>", "490", "электронн"],
+  "/politika": ["<h1>Политика в отношении данных кабинета</h1>", SELLER_NAME, SELLER_INN, "Оператор"],
+};
+for (const [path, parts] of Object.entries(legalExpect)) {
+  const html = injectIndexHtml(template, path);
+  for (const part of parts) assert.match(html, new RegExp(part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${path} missing ${part}`);
+  if (path === "/oferta" || path === "/kontakty" || path === "/politika") {
+    assert.match(html, new RegExp(`mailto:${SELLER_EMAIL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`), path);
+    assert.match(html, new RegExp(`tel:${SELLER_PHONE_TEL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`), path);
+    assert.match(html, new RegExp(SELLER_PHONE.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), path);
+  }
+  assert.doesNotMatch(html, /не действует|не списыва|тестов|заглушк/i, path);
+  assert.doesNotMatch(html, /<h1>Уведомление о прибытии и бланки МВД/, path);
+}
+
+const appSource = fs.readFileSync(new URL("../src/App.tsx", import.meta.url), "utf8");
+for (const path of ["/ceny", "/kak-eto-rabotaet", "/kontakty", "/oferta", "/politika"]) {
+  assert.match(appSource, new RegExp(`path="${path}"`));
+}
+assert.equal(SELLER_EMAIL, "support@documentmigrant.ru");
+assert.equal(SELLER_PHONE, "+7 999 529-44-65");
+assert.equal(SELLER_PHONE_TEL, "+79995294465");
+assert.match(appSource, /SELLER_PHONE_TEL/);
+assert.match(appSource, /SELLER_EMAIL/);
+assert.doesNotMatch(appSource, /info@documentmigrant/);
+assert.doesNotMatch(fs.readFileSync(new URL("../server/seo-pages.mjs", import.meta.url), "utf8"), /info@documentmigrant/);
+for (const file of ["src/App.tsx", "src/pages/Home.tsx", "src/pages/PayPage.tsx", "src/pages/Cabinet.tsx", "index.html"]) {
+  const text = fs.readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+  assert.doesNotMatch(text, /не действует|не списыва|тестов|заглушк/i, file);
+}
+
 console.log(`seo ok: ${pages.length} indexable pages`);

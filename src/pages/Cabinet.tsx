@@ -17,7 +17,7 @@ export function CabinetPage() {
       <header>
         <p className="kicker">Кабинет</p>
         <h1>Ваши бланки</h1>
-        <p className="muted">Неоплаченный черновик можно править. Готовый файл открывается после тестовой оплаты.</p>
+        <p className="muted">Неоплаченный черновик можно править. После оплаты PDF скачивается в кабинете по ссылке на файл.</p>
       </header>
       {error ? <p className="error">{error}</p> : null}
       {documents && documents.length === 0 ? (

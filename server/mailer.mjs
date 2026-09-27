@@ -14,7 +14,7 @@ export const mailer = {
       fileName,
       delivered: false,
       sentAt: new Date().toISOString(),
-      note: "Тестовая почта: письмо сохранено в кабинете и наружу не ушло.",
+      note: "Письмо записано в кабинете. Файл забираете по ссылке на скачивание.",
     };
   },
 };

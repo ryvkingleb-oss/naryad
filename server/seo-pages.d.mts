@@ -1,12 +1,24 @@
 export const SITE_NAME: string;
 export const TAGLINE: string;
 export const SITE_ORIGIN: string;
+export const SELLER_NAME: string;
+export const SELLER_INN: string;
+export const SELLER_EMAIL: string;
+export const SELLER_PHONE: string;
+export const SELLER_PHONE_TEL: string;
+export const FILE_PRICE: string;
 export const redirects: Record<string, string>;
+
+export interface ContentFact {
+  label: string;
+  value: string;
+}
 
 export interface ContentBlock {
   heading?: string;
   paragraphs?: string[];
   items?: string[];
+  facts?: ContentFact[];
   warn?: string;
 }
 

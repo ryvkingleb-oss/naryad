@@ -146,7 +146,7 @@ app.get("/api/documents/:id/quote", async (req, res) => {
 app.post("/api/documents/:id/checkout", async (req, res) => {
   const user = requireUser(req, res);
   if (!user) return;
-  if (req.body?.confirm !== true) return res.status(400).json({ error: "Подтвердите тестовую оплату" });
+  if (req.body?.confirm !== true) return res.status(400).json({ error: "Подтвердите оплату" });
   const existing = getDocument(user.id, req.params.id);
   if (!existing) return res.status(404).json({ error: "Документ не найден" });
   const result = await paymentProvider.confirm();
