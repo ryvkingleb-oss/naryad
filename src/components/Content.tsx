@@ -12,7 +12,7 @@ export function Inline({ text }: { text: string }) {
     const label = match[1];
     const href = match[2];
     if (href.startsWith("/")) nodes.push(<Link key={index} to={href}>{label}</Link>);
-    else if (href.startsWith("https://")) nodes.push(<a key={index} href={href}>{label}</a>);
+    else if (href.startsWith("https://") || href.startsWith("mailto:")) nodes.push(<a key={index} href={href}>{label}</a>);
     else nodes.push(label);
     last = index + match[0].length;
   }
@@ -27,6 +27,16 @@ export function Blocks({ blocks }: { blocks: ContentBlock[] }) {
         <section className="prose-block" key={index}>
           {block.heading ? <h2>{block.heading}</h2> : null}
           {block.warn ? <p className="warn">{block.warn}</p> : null}
+          {block.facts?.length ? (
+            <dl className="facts">
+              {block.facts.map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd><Inline text={fact.value} /></dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
           {block.paragraphs?.map((paragraph, paragraphIndex) => (
             <p key={paragraphIndex}><Inline text={paragraph} /></p>
           ))}

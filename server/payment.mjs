@@ -13,16 +13,14 @@ export function paymentModeWarning() {
 
 export const paymentProvider = {
   id: "test",
-  title: "Тестовая оплата",
+  title: "Оплата файла",
 
   async quote() {
     return {
       provider: "test",
       amountRub: 490,
       charged: false,
-      note: stub
-        ? "Списание не происходит. Это плата сервиса за готовый файл, не госпошлина."
-        : "Живая касса не подключена. Списание не происходит.",
+      note: "490 ₽ за один заполненный PDF. Это плата сервиса, не госпошлина. После оплаты файл скачивается в кабинете.",
     };
   },
 

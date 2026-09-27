@@ -61,21 +61,21 @@ export function PayPage() {
       </header>
       {!document.paid ? (
         <section className="sheet stack">
-          <h2>Тестовая оплата</h2>
-          <p>Файл бланка стоит {quote.amountRub} ₽. Это услуга сервиса, не госпошлина. Списания нет: касса помечена как тестовая.</p>
+          <h2>Оплата файла</h2>
+          <p>Заполненный PDF стоит {quote.amountRub} ₽. Это услуга сервиса, не госпошлина. После оплаты файл скачивается здесь, в кабинете. Бумажную доставку не делаем.</p>
           <p className="muted">{quote.note}</p>
-          <button className="btn" type="button" onClick={pay} disabled={pending}>Подтвердить тестовую оплату</button>
+          <button className="btn" type="button" onClick={pay} disabled={pending}>Оплатить {quote.amountRub} ₽</button>
         </section>
       ) : (
         <section className="stack">
-          <p className="warn">Оплата тестовая, деньги не списывались. Это ваш заполненный файл: клетки, пустая подпись, без печати. Пустой образец бланка скачивается отдельно, кнопкой «Скачать бланк» на странице документа.</p>
+          <p className="warn">Файл открыт. Скачайте PDF по ссылке ниже: это и есть выдача. Повторное скачивание этого бланка отдельно не оплачивается. Клетки заполнены, место подписи пустое, печати нет. Пустой образец скачивается отдельно, кнопкой «Скачать бланк» на странице документа.</p>
           <div className="row">
             <a className="btn" href={fileUrl}>Скачать PDF</a>
             <a className="btn-quiet" href={`${fileUrl}?disposition=inline`} target="_blank" rel="noreferrer">Открыть для печати</a>
           </div>
           <form className="sheet stack" onSubmit={send}>
             <h2>Письмо с файлом</h2>
-            <p className="muted">Тестовая почта сохраняет запись в кабинете и наружу не отправляет.</p>
+            <p className="muted">Запись о письме остаётся в кабинете. Сам файл забираете кнопкой скачивания выше.</p>
             <label className="field">
               <span>Куда</span>
               <input type="email" value={to} onChange={(event) => setTo(event.target.value)} required />
@@ -85,7 +85,7 @@ export function PayPage() {
             {document.emails.length ? (
               <ul className="list">
                 {document.emails.map((mail) => (
-                  <li key={mail.sentAt}>{mail.fromName ? `${mail.fromName} → ` : ""}{mail.to}: {mail.delivered ? "отправлено" : "тест, не доставлено"}</li>
+                  <li key={mail.sentAt}>{mail.fromName ? `${mail.fromName} → ` : ""}{mail.to}: {mail.delivered ? "отправлено" : "записано в кабинете"}</li>
                 ))}
               </ul>
             ) : null}

@@ -304,6 +304,21 @@ dd { margin: 2px 0 0; }
 .prose-block { display: grid; gap: 10px; }
 .prose-block h2 { font-size: 1.45rem; }
 .prose .lead { margin: 0; }
+.facts { display: grid; margin: 0; }
+.facts div {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 4px 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.facts dt, .facts dd { margin: 0; }
+.facts dt { color: var(--muted); }
+@media (max-width: 480px) {
+  .facts div { grid-template-columns: 1fr; gap: 2px; }
+}
+.site-foot-seller { color: var(--ink); }
+.site-foot a { color: var(--ink); }
 .site-foot {
   border-top: 1px solid var(--line);
   background: var(--paper);
